@@ -1,6 +1,11 @@
 <?php
-
-class UserSwitcher extends Extension{
+/**
+ * Provides a UserSwitcherForm on Controller 
+ *
+ * @author Shea Dawson <shea@silverstripe.com.au>
+ * @license BSD http://silverstripe.org/bsd-license/
+ */
+class UserSwitcherControllerExtension extends Extension{
 
 	private static $default_css = true;
 	private static $default_js = true;
@@ -10,6 +15,13 @@ class UserSwitcher extends Extension{
 	);
 
 	public function UserSwitcherForm(){
+		if(Director::isLive()){
+			return false;
+		}
+
+		if(!Permission::check('ADMIN') && !Session::get('UserSwitched')){
+			return false;
+		}	
 
 		if(self::$default_css){
 			Requirements::css(USERSWITCHER . '/css/userswitcher.css');	
@@ -19,15 +31,6 @@ class UserSwitcher extends Extension{
 			Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');	
 			Requirements::javascript(USERSWITCHER . '/javascript/userswitcher.js');	
 		}
-		
-
-		if(Director::isLive()){
-			return false;
-		}
-
-		if(!Permission::check('ADMIN') && !Session::get('SwitchedFromAdmin')){
-			return false;
-		}	
 
 		$members = Member::get()->map()->toArray();
 	
@@ -55,7 +58,7 @@ class UserSwitcher extends Extension{
 
 		if($member = Member::get()->byID((int)$data['MemberID'])){
 			$member->logIn();
-			Session::set('SwitchedFromAdmin', 1);
+			Session::set('UserSwitched', 1);
 			return $this->owner->redirectBack();
 		}
 	}

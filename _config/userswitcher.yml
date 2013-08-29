@@ -1,0 +1,6 @@
+Controller:
+  extensions:
+    ['UserSwitcherControllerExtension']
+Member:
+  extensions:
+    ['UserSwitcherMemberExtension']
