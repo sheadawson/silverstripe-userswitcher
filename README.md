@@ -5,6 +5,11 @@ The module adds a small form to frontend templates to quickly login as any user 
 
 User Switching is only available to Admin users and only when running in dev or test mode.
 
+Screenshot
+----------
+
+![Screenshot](https://raw.github.com/sheadawson/silverstripe-userswitcher/master/images/screenshot.png)
+
 Requirements
 ------------
 * SilverStripe 3.*
