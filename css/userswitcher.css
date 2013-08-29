@@ -1,0 +1,50 @@
+form.userswitcher{
+	width: inherit;
+	width: 200px;
+	overflow: hidden;
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	background: rgba(255,255,255,0.8);
+	border: 1px solid #ddd;
+	padding: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin: 0;
+		
+}
+
+form.userswitcher input, 
+form.userswitcher input[type="submit"], 
+form.userswitcher .Actions, 
+form.userswitcher .field, 
+form.userswitcher label,
+form.userswitcher fieldset{
+	margin: 0;
+	padding: 0;
+}
+
+form.userswitcher select{
+	width: 140px;
+}
+
+form.userswitcher label{
+	margin-top: 5px;
+}
+
+.userswitcher fieldset label, 
+.userswitcher fieldset .middleColumn{
+	float: left;
+} 
+
+form.userswitcher select,
+form.userswitcher .Actions{
+	margin-left: 10px;
+}
+
+.userswitcher fieldset, .userswitcher .Actions{
+	float: left;
+	overflow:hidden;
+}
+

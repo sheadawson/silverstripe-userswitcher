@@ -1,0 +1,6 @@
+---
+Name: userswitcher
+---
+Controller:
+  extensions:
+    ['UserSwitcher']
