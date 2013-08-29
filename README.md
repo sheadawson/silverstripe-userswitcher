@@ -12,4 +12,4 @@ Requirements
 Installation
 -------------------------
 1. [Install the module](http://doc.silverstripe.org/framework/en/topics/modules)
-2. Add $UserSwitcherForm to your Page.ss template, just before </body>  
+2. Add $UserSwitcherForm to your Page.ss template, just before the closing body tag
