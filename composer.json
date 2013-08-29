@@ -1,0 +1,21 @@
+{
+	"name": "sheadawson/userswitcher",
+	"type": "silverstripe-module",
+	"description": "During testing, allows Admins to quickly switch to act as a different user in the system",
+	"keywords": ["silverstripe", "testing"],
+	"license": "BSD License",
+	"authors": [
+		{
+			"name": "Shea Dawson",
+			"email": "shea@silverstripe.com.au"
+		}
+	],
+	"require": 
+	{
+		"composer/installers": "*",
+		"silverstripe/framework": ">=3.0"
+	},
+	"support": {
+		"issues": "https://github.com/sheadawson/silverstripe-userswitcher/issues"
+	}
+}
