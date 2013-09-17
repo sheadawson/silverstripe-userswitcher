@@ -49,7 +49,7 @@ class UserSwitcherControllerExtension extends Extension{
 	}
 
 	public function switchuser($data, $form){
-		if(Permission::check('ADMIN') || Session::get('SwitchedFromAdmin')){	
+		if(Permission::check('ADMIN') || Session::get('UserSwitched')){	
 			if($member = Member::get()->byID((int)$data['MemberID'])){
 				$member->logIn();
 				Session::set('UserSwitched', 1);
