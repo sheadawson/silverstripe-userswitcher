@@ -19,47 +19,44 @@ class UserSwitcherControllerExtension extends Extension{
 			return false;
 		}
 
-		if(!Permission::check('ADMIN') && !Session::get('UserSwitched')){
-			return false;
-		}	
+		if(Permission::check('ADMIN') || Session::get('UserSwitched')){
+			if(self::$default_css){
+				Requirements::css(USERSWITCHER . '/css/userswitcher.css');	
+			}
 
-		if(self::$default_css){
-			Requirements::css(USERSWITCHER . '/css/userswitcher.css');	
+			if(self::$default_js){
+				Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');	
+				Requirements::javascript(USERSWITCHER . '/javascript/userswitcher.js');	
+			}
+
+			$members = Member::get()->map()->toArray();
+		
+			$fields = FieldList::create(
+				DropdownField::create('MemberID', 'User:', $members, Member::currentUserID())
+			);
+
+			$actions = FieldList::create(
+				FormAction::create('switchuser', 'Switch User')
+			);
+
+			$validator = RequiredFields::create(
+				'MemberID'
+			);
+
+			return Form::create($this->owner, 'UserSwitcherForm', $fields, $actions, $validator)
+				->addExtraClass('userswitcher');
 		}
-
-		if(self::$default_js){
-			Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');	
-			Requirements::javascript(USERSWITCHER . '/javascript/userswitcher.js');	
-		}
-
-		$members = Member::get()->map()->toArray();
-	
-		$fields = FieldList::create(
-			DropdownField::create('MemberID', 'User:', $members, Member::currentUserID())
-		);
-
-		$actions = FieldList::create(
-			FormAction::create('switchuser', 'Switch User')
-		);
-
-		$validator = RequiredFields::create(
-			'MemberID'
-		);
-
-		return Form::create($this->owner, 'UserSwitcherForm', $fields, $actions, $validator)
-			->addExtraClass('userswitcher');
-
 	}
 
 	public function switchuser($data, $form){
-		if(!Permission::check('ADMIN') && !Session::get('SwitchedFromAdmin')){
+		if(Permission::check('ADMIN') || Session::get('SwitchedFromAdmin')){	
+			if($member = Member::get()->byID((int)$data['MemberID'])){
+				$member->logIn();
+				Session::set('UserSwitched', 1);
+				return $this->owner->redirectBack();
+			}
+		}else{
 			return $this->owner->httpError('404');
-		}		
-
-		if($member = Member::get()->byID((int)$data['MemberID'])){
-			$member->logIn();
-			Session::set('UserSwitched', 1);
-			return $this->owner->redirectBack();
 		}
 	}
 }
