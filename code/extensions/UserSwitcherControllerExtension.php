@@ -11,8 +11,23 @@ class UserSwitcherControllerExtension extends Extension{
 	private static $default_js = true;
 
 	public static $allowed_actions = array(
-		'UserSwitcherForm'
+		'UserSwitcherForm',
+		'UserSwitcherFormHTML'
 	);
+
+	public function onAfterInit(){
+		if(!Director::isLive() && (Permission::check('ADMIN') || Session::get('UserSwitched'))){
+			if(self::$default_css){
+				Requirements::css(USERSWITCHER . '/css/userswitcher.css');	
+			}
+
+			if(self::$default_js){
+				Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');	
+				Requirements::javascript(THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js');	
+				Requirements::javascript(USERSWITCHER 	. '/javascript/userswitcher.js');	
+			}
+		}		
+	}
 
 	public function UserSwitcherForm(){
 		if(Director::isLive()){
@@ -20,15 +35,6 @@ class UserSwitcherControllerExtension extends Extension{
 		}
 
 		if(Permission::check('ADMIN') || Session::get('UserSwitched')){
-			if(self::$default_css){
-				Requirements::css(USERSWITCHER . '/css/userswitcher.css');	
-			}
-
-			if(self::$default_js){
-				Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');	
-				Requirements::javascript(USERSWITCHER . '/javascript/userswitcher.js');	
-			}
-
 			$members = Member::get()->map()->toArray();
 		
 			$fields = FieldList::create(
@@ -46,6 +52,10 @@ class UserSwitcherControllerExtension extends Extension{
 			return Form::create($this->owner, 'UserSwitcherForm', $fields, $actions, $validator)
 				->addExtraClass('userswitcher');
 		}
+	}
+
+	public function UserSwitcherFormHTML(){
+		return $this->UserSwitcherForm()->forTemplate();
 	}
 
 	public function switchuser($data, $form){
