@@ -1,5 +1,5 @@
 {
-	"name": "sheadawson/userswitcher",
+	"name": "sheadawson/silverstripe-userswitcher",
 	"type": "silverstripe-module",
 	"description": "During testing, allows Admins to quickly switch to act as a different user in the system",
 	"keywords": ["silverstripe", "testing"],
@@ -17,5 +17,8 @@
 	},
 	"support": {
 		"issues": "https://github.com/sheadawson/silverstripe-userswitcher/issues"
+	},
+	"replace": {
+		"sheadawson/userswitcher"
 	}
 }
