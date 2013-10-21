@@ -1,3 +1,19 @@
+---
+Name: userswitcher
+After:
+  - '#rootroutes'
+  - '#modelascontrollerroutes'
+---
+Director:
+  rules:
+   'userswitcher//$Action/$ID/$OtherID': 'UserSwitcherController'
+
+LeftAndMain:
+  extra_requirements_javascript:
+    - 'timednotices/javascript/timednotices-cms.js'
+  extra_requirements_css:
+    - 'timednotices/css/timednotices-cms.css'
+
 Controller:
   extensions:
     ['UserSwitcherControllerExtension']

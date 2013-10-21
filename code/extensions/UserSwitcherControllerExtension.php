@@ -7,66 +7,34 @@
  */
 class UserSwitcherControllerExtension extends Extension{
 
-	private static $default_css = true;
-	private static $default_js = true;
-
 	public static $allowed_actions = array(
 		'UserSwitcherForm',
 		'UserSwitcherFormHTML'
 	);
 
 	public function onAfterInit(){
-		if(!Director::isLive() && (Permission::check('ADMIN') || Session::get('UserSwitched'))){
-			if(self::$default_css){
-				Requirements::css(USERSWITCHER . '/css/userswitcher.css');	
-			}
-
-			if(self::$default_js){
-				Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');	
-				Requirements::javascript(THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js');	
-				Requirements::javascript(USERSWITCHER 	. '/javascript/userswitcher.js');	
-			}
+		if($this->providUserSwitcher()){
+			Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');	
+			Requirements::javascript(THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js');	
+			Requirements::javascript(FRAMEWORK_DIR  . '/javascript/jquery-ondemand/jquery.ondemand.js');	
+			Requirements::javascript(USERSWITCHER 	. '/javascript/userswitcher.js');				
 		}		
 	}
 
-	public function UserSwitcherForm(){
-		if(Director::isLive()){
-			return false;
-		}
-
-		if(Permission::check('ADMIN') || Session::get('UserSwitched')){
-			$members = Member::get()->map()->toArray();
-		
-			$fields = FieldList::create(
-				DropdownField::create('MemberID', 'User:', $members, Member::currentUserID())
-			);
-
-			$actions = FieldList::create(
-				FormAction::create('switchuser', 'Switch User')
-			);
-
-			$validator = RequiredFields::create(
-				'MemberID'
-			);
-
-			return Form::create($this->owner, 'UserSwitcherForm', $fields, $actions, $validator)
-				->addExtraClass('userswitcher');
-		}
-	}
-
 	public function UserSwitcherFormHTML(){
-		return $this->UserSwitcherForm()->forTemplate();
+		$isCMS = substr($this->owner->getRequest()->getURL(), 0, 5) == 'admin' || (int)$this->owner->getRequest()->getVar('userswitchercms') == 1;
+
+		if ($isCMS){
+			Requirements::css(USERSWITCHER . '/css/userswitcher-admin.css');	
+		}else{
+			Requirements::css(USERSWITCHER . '/css/userswitcher-front.css');	
+		}
+
+		return singleton('UserSwitcherController')->UserSwitcherForm()->forTemplate();
 	}
 
-	public function switchuser($data, $form){
-		if(Permission::check('ADMIN') || Session::get('UserSwitched')){	
-			if($member = Member::get()->byID((int)$data['MemberID'])){
-				$member->logIn();
-				Session::set('UserSwitched', 1);
-				return $this->owner->redirectBack();
-			}
-		}else{
-			return $this->owner->httpError('404');
-		}
+	public function providUserSwitcher(){
+		return !Director::isLive() && (Permission::check('ADMIN') || Session::get('UserSwitched'));
 	}
+
 }
