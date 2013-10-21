@@ -17,8 +17,5 @@
 	},
 	"support": {
 		"issues": "https://github.com/sheadawson/silverstripe-userswitcher/issues"
-	},
-	"replace": [
-		"sheadawson/userswitcher"
-	]
+	}
 }
