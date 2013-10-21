@@ -14,5 +14,6 @@ User Switching is only available to ADMIN users and only when running in dev or 
 
 ##Install
 
-	$ composer require sheadawson/silverstripe-timednotices dev-master
-	$ framework/cli-script.php dev/build flush=all
+	$ composer require sheadawson/silverstripe-userswitcher dev-master
+
+Once the module files are in your project, login as and ADMIN user and run ?flush=all 
