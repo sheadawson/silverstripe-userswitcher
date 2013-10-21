@@ -15,6 +15,9 @@
 		"composer/installers": "*",
 		"silverstripe/framework": ">=3.0"
 	},
+	"extra": {
+		"installer-name": "userswitcher"
+	},
 	"support": {
 		"issues": "https://github.com/sheadawson/silverstripe-userswitcher/issues"
 	}

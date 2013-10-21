@@ -1,0 +1,30 @@
+form.userswitcher label{
+	display: none !important;
+}
+
+form.userswitcher .middleColumn{
+	margin: 0 !important;
+}
+
+form.userswitcher .field{
+	border-bottom: 0;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	margin-bottom: 0;
+	padding-bottom: 0;
+		
+}
+
+form.userswitcher .chzn-container{
+	width: 140px !important;
+}
+
+form.userswitcher .chzn-drop{
+	width: 140px !important;
+}
+
+form.userswitcher .chzn-single span{
+	color: #333;
+	padding-left: 0;
+}
