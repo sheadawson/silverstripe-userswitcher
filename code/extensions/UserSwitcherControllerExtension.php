@@ -8,7 +8,6 @@
 class UserSwitcherControllerExtension extends Extension{
 
 	public static $allowed_actions = array(
-		'UserSwitcherForm',
 		'UserSwitcherFormHTML'
 	);
 

@@ -4,9 +4,7 @@ class UserSwitcherController extends Controller{
 
 	public static $allowed_actions = array(
 		'UserSwitcherForm',
-		'UserSwitcherFormHTML'
 	);
-
 
 	public function UserSwitcherForm(){
 		if(Director::isLive()){
