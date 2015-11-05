@@ -7,6 +7,8 @@
  */
 class UserSwitcherController extends Controller {
 
+	Const URLSegment = 'userswitcher';
+
 	public static $allowed_actions = array(
 		'UserSwitcherForm',
 	);
@@ -41,7 +43,6 @@ class UserSwitcherController extends Controller {
 		}
 	}
 
-
 	public function switchuser($data, $form) {
 		if(Permission::check('ADMIN') || Session::get('UserSwitched')){	
 			if($member = Member::get()->byID((int)$data['MemberID'])) {
@@ -52,6 +53,10 @@ class UserSwitcherController extends Controller {
 		} else {
 			return $this->httpError('404');
 		}
+	}
+
+	public function Link($action = '') {
+		return self::URLSegment . '/' . $action;
 	}
 
 }
