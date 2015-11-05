@@ -1,24 +1,28 @@
 <?php
-
-class UserSwitcherController extends Controller{
+/**
+ * UserSwitcherController
+ *
+ * @author Shea Dawson <shea@livesource.co.nz>
+ * @license BSD http://silverstripe.org/bsd-license/
+ */
+class UserSwitcherController extends Controller {
 
 	public static $allowed_actions = array(
 		'UserSwitcherForm',
 	);
 
-	public function UserSwitcherForm(){
+	public function UserSwitcherForm() {
 		if(Director::isLive()){
 			return false;
 		}
 
-		if(Permission::check('ADMIN') || Session::get('UserSwitched')){
+		if(Permission::check('ADMIN') || Session::get('UserSwitched')) {
 			$members = Member::get()->map()->toArray();
 				
-			if(isset($_GET['userswitchercms']) && $_GET['userswitchercms'] == 1){
+			if(isset($_GET['userswitchercms']) && $_GET['userswitchercms'] == 1) {
 				$field = DropdownField::create('MemberID', '', $members)
-						->setAttribute('data-placeholder', _t('UserSwticherController.SwitchUser','Switch User'))
-						->setHasEmptyDefault(true);
-			}else{
+					->setEmptyString(_t('UserSwticherController.SwitchUser','Switch User'));
+			} else {
 				$field = DropdownField::create('MemberID', 'User:', $members, Member::currentUserID());
 			}
 
@@ -38,14 +42,14 @@ class UserSwitcherController extends Controller{
 	}
 
 
-	public function switchuser($data, $form){
+	public function switchuser($data, $form) {
 		if(Permission::check('ADMIN') || Session::get('UserSwitched')){	
-			if($member = Member::get()->byID((int)$data['MemberID'])){
+			if($member = Member::get()->byID((int)$data['MemberID'])) {
 				$member->logIn();
 				Session::set('UserSwitched', 1);
 				return $this->redirectBack();
 			}
-		}else{
+		} else {
 			return $this->httpError('404');
 		}
 	}

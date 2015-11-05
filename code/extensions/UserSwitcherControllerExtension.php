@@ -2,17 +2,17 @@
 /**
  * Provides a UserSwitcherForm on Controller 
  *
- * @author Shea Dawson <shea@silverstripe.com.au>
+ * @author Shea Dawson <shea@livesource.co.nz>
  * @license BSD http://silverstripe.org/bsd-license/
  */
-class UserSwitcherControllerExtension extends Extension{
+class UserSwitcherControllerExtension extends Extension {
 
 	public static $allowed_actions = array(
 		'UserSwitcherFormHTML'
 	);
 
-	public function onAfterInit(){
-		if($this->providUserSwitcher()){
+	public function onAfterInit() {
+		if($this->providUserSwitcher()) {
 			Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');	
 			Requirements::javascript(THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js');	
 			Requirements::javascript(FRAMEWORK_DIR  . '/javascript/jquery-ondemand/jquery.ondemand.js');	
@@ -20,19 +20,19 @@ class UserSwitcherControllerExtension extends Extension{
 		}		
 	}
 
-	public function UserSwitcherFormHTML(){
+	public function UserSwitcherFormHTML() {
 		$isCMS = substr($this->owner->getRequest()->getURL(), 0, 5) == 'admin' || (int)$this->owner->getRequest()->getVar('userswitchercms') == 1;
 
-		if ($isCMS){
+		if ($isCMS) {
 			Requirements::css(USERSWITCHER . '/css/userswitcher-admin.css');	
-		}else{
+		} else {
 			Requirements::css(USERSWITCHER . '/css/userswitcher-front.css');	
 		}
 
 		return singleton('UserSwitcherController')->UserSwitcherForm()->forTemplate();
 	}
 
-	public function providUserSwitcher(){
+	public function providUserSwitcher() {
 		return !Director::isLive() && (Permission::check('ADMIN') || Session::get('UserSwitched'));
 	}
 
