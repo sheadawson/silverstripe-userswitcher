@@ -6,7 +6,7 @@ After:
 ---
 Director:
   rules:
-   'userswitcher//$Action/$ID/$OtherID': 'UserSwitcherController'
+    'userswitcher//$Action/$ID/$OtherID': 'UserSwitcherController'
 Controller:
   extensions:
     ['UserSwitcherControllerExtension']
