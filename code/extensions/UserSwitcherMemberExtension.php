@@ -5,9 +5,11 @@
  * @author Shea Dawson <shea@livesource.co.nz>
  * @license BSD http://silverstripe.org/bsd-license/
  */
-class UserSwitcherMemberExtension extends DataExtension {
+class UserSwitcherMemberExtension extends DataExtension
+{
 
-	public function memberLoggedOut() {
-		Session::clear('UserSwitched');
-	}
+    public function memberLoggedOut()
+    {
+        Session::clear('UserSwitched');
+    }
 }
