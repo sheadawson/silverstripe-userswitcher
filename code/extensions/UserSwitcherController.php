@@ -21,8 +21,8 @@ class UserSwitcherController extends Controller
         }
 
         if (Permission::check('ADMIN') || Session::get('UserSwitched')) {
-            $members = Member::get()->map()->toArray();
-                
+            $members = Member::get()->sort('Surname ASC')->map()->toArray();
+
             if (isset($_GET['userswitchercms']) && $_GET['userswitchercms'] == 1) {
                 $field = DropdownField::create('MemberID', '', $members)
                     ->setEmptyString(_t('UserSwticherController.SwitchUser', 'Switch User'));
