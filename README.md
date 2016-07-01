@@ -14,6 +14,6 @@ User Switching is only available to ADMIN users and only when running in dev or 
 
 ##Install
 
-	$ composer require sheadawson/silverstripe-userswitcher dev-master
+	$ composer require sheadawson/silverstripe-userswitcher
 
 Once the module files are in your project, login as and ADMIN user and run ?flush=all 
