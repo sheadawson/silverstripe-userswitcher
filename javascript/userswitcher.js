@@ -4,12 +4,14 @@
 		$('form.userswitcher select').entwine({
 			onchange : function(){
 				this.parents('form:first').submit();
+				this._super();
 			}
 		});
 
 		$('form.userswitcher .Actions').entwine({
 			onmatch : function(){
 				this.hide();
+				this._super();
 			}
 		});
 
@@ -28,7 +30,7 @@
 					}
 				  	
 				});
-
+				this._super();
 			}
 		});
 		
