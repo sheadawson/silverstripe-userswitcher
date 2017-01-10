@@ -13,3 +13,6 @@ Controller:
 Member:
   extensions:
     ['UserSwitcherMemberExtension']
+SiteConfig:
+  extensions:
+    ['UserSwitcherToggleExtension']
