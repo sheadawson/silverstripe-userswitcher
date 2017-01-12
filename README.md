@@ -12,6 +12,14 @@ User Switching is only available to ADMIN users and only when running in dev or 
 
 * SilverStripe 3.*
 
+##Disable default jQuery
+
+If using this on the frontend, you can disable jQuery like so:
+
+```php
+Requirements::block(THIRDPARTY_DIR . '/jquery/jquery.js');
+```
+
 ##Install
 
 	$ composer require sheadawson/silverstripe-userswitcher

@@ -14,28 +14,39 @@ class UserSwitcherControllerExtension extends Extension
 
     public function onAfterInit()
     {
-        if ($this->providUserSwitcher()) {
-            Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
-            Requirements::javascript(THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js');
-            Requirements::javascript(FRAMEWORK_DIR  . '/javascript/jquery-ondemand/jquery.ondemand.js');
-            Requirements::javascript(USERSWITCHER    . '/javascript/userswitcher.js');
+        // NOTE: Director::is_ajax() is to avoid these files
+        //       being re-included.
+        //
+        //       Fixes case where you Requirements::block() jquery.js
+        //       in your Page::init(), but it's not respected due
+        //       to this providing jquery.js again with jquery.ondemand.
+        //
+        if (Director::is_ajax()) {
+            return;
+        }
+        
+        if ($this->provideUserSwitcher()) {
+            if ($this->owner instanceof LeftAndMain) {
+                Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+                Requirements::javascript(THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js');
+                Requirements::javascript(FRAMEWORK_DIR  . '/javascript/jquery-ondemand/jquery.ondemand.js');
+                Requirements::javascript(USERSWITCHER    . '/javascript/userswitcher.js');
+                Requirements::css(USERSWITCHER . '/css/userswitcher-admin.css');
+            } else {
+                Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+                Requirements::javascript(USERSWITCHER    . '/javascript/userswitcher.js');
+                Requirements::css(USERSWITCHER . '/css/userswitcher-front.css');
+            }
         }
     }
 
     public function UserSwitcherFormHTML()
     {
-        $isCMS = substr($this->owner->getRequest()->getURL(), 0, 5) == 'admin' || (int)$this->owner->getRequest()->getVar('userswitchercms') == 1;
-
-        if ($isCMS) {
-            Requirements::css(USERSWITCHER . '/css/userswitcher-admin.css');
-        } else {
-            Requirements::css(USERSWITCHER . '/css/userswitcher-front.css');
-        }
-
+        //$isCMS = (int)$this->owner->getRequest()->getVar('userswitchercms') == 1;
         return singleton('UserSwitcherController')->UserSwitcherForm()->forTemplate();
     }
 
-    public function providUserSwitcher()
+    public function provideUserSwitcher()
     {
         return !Director::isLive() && (Permission::check('ADMIN') || Session::get('UserSwitched'));
     }

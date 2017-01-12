@@ -3,7 +3,7 @@
 		var base = $('base').prop('href');
 		var isCMS = $('body').hasClass('cms') ? 1 : 0;
 
-		$.get(base + 'userswitcher/UserSwitcherFormHTML/', {userswitchercms: isCMS}).done(function(data){
+		$.get(base + 'userswitcher/UserSwitcherFormHTML/', {userswitchercms: isCMS, ajax: 1}).done(function(data){
 			var $data = $(data);
 			if (!$data.length) {
 				return;
