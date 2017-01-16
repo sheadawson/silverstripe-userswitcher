@@ -7,7 +7,6 @@
  */
 class UserSwitcherController extends Controller
 {
-
     const URLSegment = 'userswitcher';
 
     public static $allowed_actions = array(
@@ -16,41 +15,41 @@ class UserSwitcherController extends Controller
 
     public function UserSwitcherForm()
     {
-        if (Director::isLive()) {
-            return false;
+        if (!singleton('UserSwitcher')->canUserSwitch()) {
+            return;
         }
 
-        if (Permission::check('ADMIN') || Session::get('UserSwitched')) {
-            $members = Member::get()->sort('Surname ASC')->map()->toArray();
+        $members = Member::get()->sort('Surname ASC')->map()->toArray();
 
-            if (isset($_GET['userswitchercms']) && $_GET['userswitchercms'] == 1) {
-                $field = DropdownField::create('MemberID', '', $members)
-                    ->setEmptyString(_t('UserSwticherController.SwitchUser', 'Switch User'));
-            } else {
-                $field = DropdownField::create('MemberID', 'User:', $members, Member::currentUserID());
-            }
-
-            $fields = FieldList::create($field);
-
-            $actions = FieldList::create(
-                FormAction::create('switchuser', 'Switch User')
-            );
-
-            $validator = RequiredFields::create(
-                'MemberID'
-            );
-
-            return Form::create($this, 'UserSwitcherForm', $fields, $actions, $validator)
-                ->addExtraClass('userswitcher');
+        if (isset($_GET['userswitchercms']) && $_GET['userswitchercms'] == 1) {
+            $field = DropdownField::create('MemberID', '', $members)
+                ->setEmptyString(_t('UserSwticherController.SwitchUser', 'Switch User'));
+        } else {
+            $field = DropdownField::create('MemberID', 'User:', $members, Member::currentUserID());
         }
+
+        $fields = FieldList::create($field);
+
+        $actions = FieldList::create(
+            FormAction::create('switchuser', 'Switch User')
+        );
+
+        $validator = RequiredFields::create(
+            'MemberID'
+        );
+
+        return Form::create($this, 'UserSwitcherForm', $fields, $actions, $validator)
+            ->addExtraClass('userswitcher');
     }
 
     public function switchuser($data, $form)
     {
-        if (Permission::check('ADMIN') || Session::get('UserSwitched')) {
-            if ($member = Member::get()->byID((int)$data['MemberID'])) {
-                $member->logIn();
+        if (singleton('UserSwitcher')->canUserSwitch()) {
+            $memberID = isset($data['MemberID']) ? (int)$data['MemberID'] : 0;
+            $member = Member::get()->byID($memberID);
+            if ($member) {
                 Session::set('UserSwitched', 1);
+                $member->logIn();
                 return $this->redirectBack();
             }
         } else {

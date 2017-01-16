@@ -14,6 +14,12 @@ class UserSwitcherControllerExtension extends Extension
 
     public function onAfterInit()
     {
+        // Ignore in dev/build
+        if ($this->owner instanceof DevelopmentAdmin ||
+            $this->owner instanceof DevBuildController ||
+            $this->owner instanceof DatabaseAdmin) {
+            return;
+        }
         // NOTE: Director::is_ajax() is to avoid these files
         //       being re-included.
         //
@@ -25,7 +31,7 @@ class UserSwitcherControllerExtension extends Extension
             return;
         }
         
-        if ($this->provideUserSwitcher()) {
+        if (singleton('UserSwitcher')->canUserSwitch()) {
             if ($this->owner instanceof LeftAndMain) {
                 Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
                 Requirements::javascript(THIRDPARTY_DIR . '/jquery-entwine/dist/jquery.entwine-dist.js');
@@ -42,12 +48,9 @@ class UserSwitcherControllerExtension extends Extension
 
     public function UserSwitcherFormHTML()
     {
-        //$isCMS = (int)$this->owner->getRequest()->getVar('userswitchercms') == 1;
+        if (!singleton('UserSwitcher')->canUserSwitch()) {
+            return;
+        }
         return singleton('UserSwitcherController')->UserSwitcherForm()->forTemplate();
-    }
-
-    public function provideUserSwitcher()
-    {
-        return !Director::isLive() && (Permission::check('ADMIN') || Session::get('UserSwitched'));
     }
 }
