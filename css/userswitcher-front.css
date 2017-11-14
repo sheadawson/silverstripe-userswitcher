@@ -12,13 +12,20 @@ form.userswitcher{
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	margin: 0;
-		
+
 }
 
-form.userswitcher input, 
-form.userswitcher input[type="submit"], 
-form.userswitcher .Actions, 
-form.userswitcher .field, 
+#userSwitcher form.userswitcher {
+    position: relative;
+    left: 0;
+    bottom: 0;
+
+}
+
+form.userswitcher input,
+form.userswitcher input[type="submit"],
+form.userswitcher .Actions,
+form.userswitcher .field,
 form.userswitcher label,
 form.userswitcher fieldset{
 	margin: 0;
@@ -33,14 +40,19 @@ form.userswitcher label{
 	margin-top: 5px;
 }
 
-.userswitcher fieldset label, 
+.userswitcher fieldset label,
 .userswitcher fieldset .middleColumn{
 	float: left;
-} 
+}
 
 form.userswitcher select,
 form.userswitcher .Actions{
 	margin-left: 10px;
+}
+
+form.userswitcher select,
+#userSwitcher form.userswitcher .Actions{
+    margin-left: 0;
 }
 
 .userswitcher fieldset, .userswitcher .Actions{
