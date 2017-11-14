@@ -15,11 +15,17 @@
 			// Hide submit button
 			$data.find('.Actions').hide();
 
+			var userSwitcherContainer = $('body');
+
+			if ($('#userSwitcher').length){
+			    userSwitcherContainer = $('#userSwitcher');
+            }
+
 			if($('body').hasClass('cms')){
-				$('.cms-login-status').append($data);
-			}else{
-				$('body').append($data);	
+                userSwitcherContainer = $('.cms-login-status');
 			}
+
+			userSwitcherContainer.append($data);
 		});
 	}
 
@@ -44,4 +50,4 @@
 	main();
 })(jQuery);
 
- 
+
