@@ -23,9 +23,9 @@ class UserSwitcherController extends Controller
 
         if (isset($_GET['userswitchercms']) && $_GET['userswitchercms'] == 1) {
             $field = DropdownField::create('MemberID', '', $members)
-                ->setEmptyString(_t('UserSwticherController.SwitchUser', 'Switch User'));
+                ->setEmptyString(_t('UserSwitcherController.SwitchUser', 'Switch User'));
         } else {
-            $field = DropdownField::create('MemberID', 'User:', $members, Member::currentUserID());
+            $field = DropdownField::create('MemberID', _t('UserSwitcherController.SwitchUser', 'Switch User') . ':', $members, Member::currentUserID());
         }
 
         $fields = FieldList::create($field);
