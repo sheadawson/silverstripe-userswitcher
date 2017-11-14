@@ -10,15 +10,17 @@
 			"email": "shea@silverstripe.com.au"
 		}
 	],
-	"require": 
+	"require":
 	{
-		"composer/installers": "*",
-		"silverstripe/framework": ">=3.0"
+		"silverstripe/framework": "^3.0"
 	},
 	"extra": {
 		"installer-name": "userswitcher"
 	},
 	"support": {
 		"issues": "https://github.com/sheadawson/silverstripe-userswitcher/issues"
-	}
+	},
+    "suggest": {
+        "jonom/silverstripe-betternavigator": "Front-end utility menu for SilverStripe websites featuring administration and development tools"
+    }
 }
