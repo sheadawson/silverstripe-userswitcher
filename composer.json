@@ -7,15 +7,24 @@
 	"authors": [
 		{
 			"name": "Shea Dawson",
-			"email": "shea@silverstripe.com.au"
+			"email": "shea@livesource.co.nz"
 		}
 	],
 	"require":
 	{
-		"silverstripe/framework": "^3.0"
+		"silverstripe/framework": "^4.0"
 	},
+    "autoload": {
+        "psr-4": {
+          "SheaDawson\\UserSwitcher\\": "src/"
+        }
+    },
 	"extra": {
-		"installer-name": "userswitcher"
+		"installer-name": "userswitcher",
+        "expose": [
+            "javascript",
+            "css"
+        ]
 	},
 	"support": {
 		"issues": "https://github.com/sheadawson/silverstripe-userswitcher/issues"

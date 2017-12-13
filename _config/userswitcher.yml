@@ -1,15 +1,13 @@
 ---
 Name: userswitcher
-After:
-  - '#rootroutes'
-  - '#modelascontrollerroutes'
+After: framework/routes#coreroutes
 ---
-Director:
+SilverStripe\Control\Director:
   rules:
-    'userswitcher//$Action/$ID/$OtherID': 'UserSwitcherController'
-Controller:
+    'userswitcher//$Action/$ID/$OtherID': 'SheaDawson\UserSwitcher\UserSwitcherController'
+SilverStripe\Control\Controller:
   extensions:
-    ['UserSwitcherControllerExtension']
-Member:
+    - SheaDawson\UserSwitcher\UserSwitcherControllerExtension
+SilverStripe\Security\Member:
   extensions:
-    ['UserSwitcherMemberExtension']
+    - SheaDawson\UserSwitcher\UserSwitcherMemberExtension

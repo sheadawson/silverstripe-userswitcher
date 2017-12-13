@@ -12,7 +12,6 @@ form.userswitcher{
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	margin: 0;
-
 }
 
 #userSwitcher form.userswitcher {
@@ -60,3 +59,26 @@ form.userswitcher select,
 	overflow:hidden;
 }
 
+#BetterNavigatorContent form.userswitcher {
+    width: 130px
+}
+
+#BetterNavigatorContent form.userswitcher fieldset{
+    border-top: none;
+}
+
+#BetterNavigatorContent form.userswitcher select{
+    width: 130px;
+}
+
+#BetterNavigatorContent form.userswitcher label{
+    margin-top: 0;
+    color: #313639;
+    text-transform: none;
+    font-size: 12px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#BetterNavigatorContent form.userswitcher .action{
+    display: none;
+}

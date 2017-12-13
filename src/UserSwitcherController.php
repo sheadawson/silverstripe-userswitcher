@@ -1,4 +1,17 @@
 <?php
+
+namespace SheaDawson\UserSwitcher;
+
+use SilverStripe\Security\Member;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Security\IdentityStore;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormAction;
+use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\Form;
+use SilverStripe\Control\Controller;
+
 /**
  * UserSwitcherController
  *
@@ -9,13 +22,13 @@ class UserSwitcherController extends Controller
 {
     const URLSegment = 'userswitcher';
 
-    public static $allowed_actions = array(
+    private static $allowed_actions = array(
         'UserSwitcherForm',
     );
 
     public function UserSwitcherForm()
     {
-        if (!singleton('UserSwitcher')->canUserSwitch()) {
+        if (!singleton('SheaDawson\UserSwitcher\UserSwitcher')->canUserSwitch()) {
             return;
         }
 
@@ -44,12 +57,13 @@ class UserSwitcherController extends Controller
 
     public function switchuser($data, $form)
     {
-        if (singleton('UserSwitcher')->canUserSwitch()) {
+        if (singleton('SheaDawson\UserSwitcher\UserSwitcher')->canUserSwitch()) {
             $memberID = isset($data['MemberID']) ? (int)$data['MemberID'] : 0;
             $member = Member::get()->byID($memberID);
             if ($member) {
-                Session::set('UserSwitched', 1);
-                $member->logIn();
+                $this->getRequest()->getSession()->set('UserSwitched', 1);
+                $identityStore = Injector::inst()->get(IdentityStore::class);
+                $identityStore->logIn($member, false, $this->getRequest());
                 return $this->redirectBack();
             }
         } else {
