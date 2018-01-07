@@ -32,7 +32,7 @@ class UserSwitcherController extends Controller
             return;
         }
 
-        $members = Member::get()->sort('Surname ASC')->map()->toArray();
+        $members = Member::get()->sort('Firstname ASC')->map()->toArray();
 
         if (isset($_GET['userswitchercms']) && $_GET['userswitchercms'] == 1) {
             $field = DropdownField::create('MemberID', '', $members)
