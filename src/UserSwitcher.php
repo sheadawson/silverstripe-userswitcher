@@ -17,6 +17,6 @@ class UserSwitcher
     public function canUserSwitch()
     {
         $session = Controller::curr()->getRequest()->getSession();
-        return Director::isDev() && ($session->get('UserSwitched') || Permission::check('ADMIN'));
+        return !Director::isLive() && ($session->get('UserSwitched') || Permission::check('ADMIN'));
     }
 }
