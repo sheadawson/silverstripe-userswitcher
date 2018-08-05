@@ -21,6 +21,7 @@ class UserSwitcherControllerExtension extends Extension
 
     public function onAfterInit()
     {
+        die('hey');
         // Ignore in dev/build
         if ($this->owner instanceof DevelopmentAdmin ||
             $this->owner instanceof DevBuildController ||
@@ -38,7 +39,7 @@ class UserSwitcherControllerExtension extends Extension
             return;
         }
 
-        if (singleton('SheaDawson\UserSwitcher\UserSwitcher')->canUserSwitch()) {
+        if (UserSwitcher::singleton()->canUserSwitch()) {
             $url = $this->owner->getRequest()->getURL();
             if (substr($url, 0, 6) == 'admin/') {
                 //Requirements::javascript('userswitcher/javascript/userswitcher.js');

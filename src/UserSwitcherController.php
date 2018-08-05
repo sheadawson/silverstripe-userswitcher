@@ -2,6 +2,7 @@
 
 namespace SheaDawson\UserSwitcher;
 
+use SheaDawson\UserSwitcher\UserSwitcher;
 use SilverStripe\Security\Member;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Security\IdentityStore;
@@ -26,9 +27,15 @@ class UserSwitcherController extends Controller
         'UserSwitcherForm',
     );
 
+    public function index()
+    {
+        die('d');
+    }
+
     public function UserSwitcherForm()
     {
-        if (!singleton('SheaDawson\UserSwitcher\UserSwitcher')->canUserSwitch()) {
+        die('here');
+        if (!UserSwitcher::singleton()->canUserSwitch()) {
             return;
         }
 
