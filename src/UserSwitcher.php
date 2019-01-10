@@ -2,6 +2,7 @@
 
 namespace SheaDawson\UserSwitcher;
 
+use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\Controller;
 use SilverStripe\Security\Permission;
@@ -14,6 +15,8 @@ use SilverStripe\Security\Permission;
  */
 class UserSwitcher
 {
+    use Injectable;
+
     public function canUserSwitch()
     {
         $session = Controller::curr()->getRequest()->getSession();

@@ -27,14 +27,8 @@ class UserSwitcherController extends Controller
         'UserSwitcherForm',
     );
 
-    public function index()
-    {
-        die('d');
-    }
-
     public function UserSwitcherForm()
     {
-        die('here');
         if (!UserSwitcher::singleton()->canUserSwitch()) {
             return;
         }
@@ -64,7 +58,7 @@ class UserSwitcherController extends Controller
 
     public function switchuser($data, $form)
     {
-        if (singleton('SheaDawson\UserSwitcher\UserSwitcher')->canUserSwitch()) {
+        if (!UserSwitcher::singleton()->canUserSwitch()) {
             $memberID = isset($data['MemberID']) ? (int)$data['MemberID'] : 0;
             $member = Member::get()->byID($memberID);
             if ($member) {

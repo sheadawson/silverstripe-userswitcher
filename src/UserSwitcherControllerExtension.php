@@ -21,7 +21,6 @@ class UserSwitcherControllerExtension extends Extension
 
     public function onAfterInit()
     {
-        die('hey');
         // Ignore in dev/build
         if ($this->owner instanceof DevelopmentAdmin ||
             $this->owner instanceof DevBuildController ||
